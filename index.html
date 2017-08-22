@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!---- jQuery ---->
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/jquery.cookie.js"></script>
+        <!---- CryptoJS ---->
+        <script src="http://cryptojs.altervista.org/api/functions_cryptography.js"></script>
+        <!---- Bootstrap ---->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!---- JsScript & CSS ---->
+        <script src="js/client.js"></script>
+        <script src="localConfig.js"></script>
+        <style src="stylesheet.css"></style>
+        <!---- MetaTag ---->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta charset="utf-8">
+        <title>Home</title>
+    </head>
+    <body onload="checkAdmin()" style="overflow-x: hidden;">
+        <!---- MENU ---->
+        <nav class="navbar navbar-inverse"> 
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html">Judo APP</a>
+                </div>
+                <div class="nav navbar-button navbar-right" style="margin-right: 150px;">
+                    <div class="btn-group btn-group-lg">
+                        <button type="button" class="btn btn-success btn-nav insert" onClick="location.href='inserisci.html';">Inserisci</button>
+                        <button type="button" class="btn btn-success btn-nav admin" onclick="location.href='amministrazione.html';">Amministrazione</button>
+                        <button type="button" class="btn btn-success btn-nav log" data-toggle="modal" data-target="#loginModal">Log In</button>
+                        <button type="button" class="btn btn-success btn-nav logOut" onclick="logOut()">Log Out</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!---- Modal LogIn ---->
+        <div id="loginModal" class="modal modal-vertical-centered" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none;" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <center><h2>Log In</h2></center>
+                        <form onsubmit="logIn(AdminID.value)">
+                        <center>
+                            <input style="margin-bottom: 10px;" type="password" class="form-control" id="AdminID" placeholder="Inserisci Password" required>
+                            <button type="submit" class="btn btn-success">Accedi</button>
+                        </center>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---- Descrizione ---->
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="thumbnail">
+                    <h2 style="text-align:center;"><b>Gara di Judo</b></h2>
+                </div>
+            </div>
+        </div>
+        <!---- Tabelloni & Atleti ---->
+        <div class="row">
+            <div class="col-md-3 col-md-offset-2">
+                <div class="thumbnail">
+                    <a href="risultati.html" style="text-decoration:none"><img src="images/iconmonstr-calendar-7-64.png">
+                    <br />
+                        <div class="alert alert-success" role="alert" style="text-align:center;"><b><h3>Risultati</h3></b></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3 col-md-offset-2">
+                <div class="thumbnail">
+                    <a href="atleti.html" style="text-decoration:none"><img src="images/judo-fighter.png">
+                    <br />
+                        <div class="alert alert-success" role="alert" style="text-align:center"><b><h3>Atleti</h3></b></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!---- Tatami & Società ---->
+        <div class="row">
+          <div class="col-md-3 col-md-offset-2">
+                <div class="thumbnail">
+                    <a href="tatami.html" style="text-decoration:none"><img src="images/iconmonstr-layer-22-64.png">
+                    <br />
+                        <div class="alert alert-success" role="alert" style="text-align:center"><b><h3>Tatami</h3></b></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3 col-md-offset-2">
+                <div class="thumbnail">
+                    <a href="societa.html" style="text-decoration:none"><img src="images/karate.png">
+                    <br />
+                        <div class="alert alert-success" role="alert" style="text-align:center"><b><h3>Società</h3></b></div>
+                    </a>
+                </div>
+            </div>
+          </div>
+    </body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!---- jQuery ---->
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/jquery.cookie.js"></script>
+        <!---- CryptoJS ---->
+        <script src="http://cryptojs.altervista.org/api/functions_cryptography.js"></script>
+        <!---- Bootstrap ---->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!---- JsScript & CSS ---->
+        <script src="js/client.js"></script>
+        <style src="stylesheet.css"></style>
+        <script src="localConfig.js"></script>
+        <!---- MetaTag ---->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta charset="utf-8">
+        <title>Atleti</title>
+    </head>
+    <body OnLoad="StampaAtleti(), checkAdmin()" style="overflow-x: hidden;">
+        <!---- MENU ---->
+        <nav class="navbar navbar-inverse"> 
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a class="navbar-brand" href="index.html">Judo APP</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="risultati.html">Risultati</a></li>
+                        <li class="active"><a href="atleti.html">Atleti</a></li>
+                        <li><a href="tatami.html">Tatami</a></li>
+                        <li><a href="societa.html">Società</a></li>
+                    </ul>
+                    <div class="nav navbar-button navbar-right" style="margin-right: 150px;">
+                        <div class="btn-group btn-group-lg">
+                            <button type="button" class="btn btn-success btn-nav insert" onClick="location.href='inserisci.html';">Inserisci</button>
+                            <button type="button" class="btn btn-success btn-nav admin" onClick="location.href='amministrazione.html';">Amministrazione</button>
+                            <button type="button" class="btn btn-success btn-nav log" data-toggle="modal" data-target="#loginModal">Log In</button>
+                            <button type="button" class="btn btn-success btn-nav logOut" onclick="logOut()">Log Out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!---- Modal LogIn ---->
+        <div id="loginModal" class="modal modal-vertical-centered" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none;" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+				    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <center><h2>Log In</h2></center>
+                        <form onsubmit="logIn(AdminID.value)">
+                        <center>
+					        <input style="margin-bottom: 10px;" type="password" class="form-control" id="AdminID" placeholder="Inserisci Password" required>
+                            <button type="submit" class="btn btn-success">Accedi</button>
+                        </center>
+                        </form>
+				    </div>
+                </div>
+            </div>
+        </div>
+        <!---- Ricerca & Viasualizzazione Atleti ---->
+        <div class="row">
+            <div class="col-md-offset-1 col-md-5 col-centered">
+                <div class="thumbnail">
+                    <input id="TextBoxRicerca" type="text" name="Ricerca"  value="" class="form-control" oninput="Ricerca(TextBoxRicerca.value)">
+                    <br />
+                    <form>
+                        <div id="listAtleti" style="width: 100%;height: 535px;overflow: auto;">
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-5 col-centered">
+                <div class="thumbnail">
+                    <center>
+                        <div class="panel panel-success">
+                            <div class="panel-heading"><h2><strong>Dati Atleta</strong></h2></div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <td><strong><h2>Nome:</h2></strong></td>
+                                        <td><h2 id="nome"></h2></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong><h2>Cognome:</h2></strong></td>
+                                        <td><h2 id="cognome"></h2></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong><h2>Sesso:</h2></strong></td>
+                                        <td><h2 id="sesso"></h2></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong><h2>Categoria Peso:</h2></strong></td>
+                                        <td><h2 id="CategoriaPeso"></h2></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong><h2>Categoria Età:</h2></strong></td>
+                                        <td><h2 id="CategoriaEtà"></h2></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong><h2>Società:</h2></strong></td>
+                                        <td><h2 id="societa"></h2></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/jquery.cookie.js"></script>
+        <!---- CryptoJS ---->
+        <script src="http://cryptojs.altervista.org/api/functions_cryptography.js"></script>
+        <!---- Bootstrap ---->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!---- JsScript & CSS ---->
+        <script src="js/client.js"></script>
+        <style src="stylesheet.css"></style>
+        <script src="localConfig.js"></script>
+        <!---- MetaTag ---->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta charset="utf-8">
+    </head>
+    <body OnLoad="ListaCategorie(), ListaPesi(), checkAdmin()" style="overflow-x: hidden;">
+        <!---- MENU ----> 
+        <nav class="navbar navbar-inverse"> 
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a class="navbar-brand" href="index.html">Judo APP</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="risultati.html">Risultati</a></li>
+                        <li><a href="atleti.html">Atleti</a></li>
+                        <li><a href="tatami.html">Tatami</a></li>
+                        <li><a href="societa.html">Società</a></li>
+                    </ul>
+                    <div class="nav navbar-button navbar-right" style="margin-right: 150px;">
+                        <div class="btn-group btn-group-lg">
+                            <button type="button" class="btn btn-success btn-nav insert" onClick="location.href='inserisci.html';">Inserisci</button>
+                            <button type="button" class="btn btn-success btn-nav log" data-toggle="modal" data-target="#loginModal">Log In</button>
+                            <button type="button" class="btn btn-success btn-nav logOut" onclick="logOut()">Log Out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!---- Modal LogIn ---->
+        <div id="loginModal" class="modal modal-vertical-centered" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none;" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <center><h2>Log In</h2></center>
+                        <form onsubmit="logIn(AdminID.value)">
+                        <center>
+                            <input style="margin-bottom: 10px;" type="password" class="form-control" id="AdminID" placeholder="Inserisci Password" required>
+                            <button type="submit" class="btn btn-success">Accedi</button>
+                        </center>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---- Modal ZeroAtleti ---->
+        <div id="ZeroAtletiModal" class="modal modal-vertical-centered" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none;" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+				    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <br />
+                        <div class="alert alert-danger" role="alert">
+                            <h2>Non ci sono atleti per questa categoria</h2>
+                        </div>
+				    </div>
+                </div>
+            </div>
+        </div> 
+        <!---- Crea Incontri ---->
+        <form name="creaIncontri" onsubmit="CreaIncontri(sesso.value, Peso.value, Categorie.value, Tatami.value);return false;" >
+            <div class="row">
+                <div class="col-md-offset-2 col-md-2">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <label><input type='radio' name='sesso' value=1 checked><img src='images/M.png' /></label>
+                        </span>
+                        <span class="input-group-addon">
+                            <label><input type='radio' name='sesso' value=0><img src='images/F.png' /></label> 
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div id="selectCatEta">
+                            <input type="text" class="form-control" placeholder="Categoria" name="categoria">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div id="selectCatPeso">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <label><input type='radio' name='Tatami' value=1 checked><img src='images/iconmonstr-layer-22-64.png' /><h1>1</h1></label>
+                        </span>
+                        <span class="input-group-addon">
+                            <label><input type='radio' name='Tatami' value=2><img src='images/iconmonstr-layer-22-64.png' /><h1>2</h1></label> 
+                        </span>
+                        <span class="input-group-addon">
+                            <label><input type='radio' name='Tatami' value=3><img src='images/iconmonstr-layer-22-64.png' /><h1>3</h1></label> 
+                        </span>
+                        <span class="input-group-addon">
+                            <label><input type='radio' name='Tatami' value=4><img src='images/iconmonstr-layer-22-64.png' /><h1>4</h1></label> 
+                        </span>
+                        <span class="input-group-addon">
+                            <label><input type='radio' name='Tatami' value=5><img src='images/iconmonstr-layer-22-64.png' /><h1>5</h1></label> 
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-offset-5 col-md-2">
+                    <button type="submit" class="btn btn-success btn-small btn-nav">Calcola</button>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

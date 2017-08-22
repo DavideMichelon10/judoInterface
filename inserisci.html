@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!---- jQuery ---->
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/jquery.cookie.js"></script>
+        <!---- CryptoJS ---->
+        <script src="http://cryptojs.altervista.org/api/functions_cryptography.js"></script>
+        <!---- Bootstrap ---->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!---- JsScript & CSS ---->
+        <script src="js/client.js"></script>
+        <style src="stylesheet.css"></style>
+        <script src="localConfig.js"></script>
+        <!---- MetaTag ---->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta charset="utf-8">
+        <title>Inserisci Atleti</title>
+        <style>
+        table  { 
+            border-collapse:collapse
+        }
+        td, th { 
+            border:1px solid #ddd;
+            padding:8px;
+        }
+        </style>
+    </head>
+    <body OnLoad="StampaTabellaAtleti(), ListaPesi(), ListaCategorie(), checkAdmin()" style="overflow-x: hidden;">
+        <!---- MENU ---->
+        <nav class="navbar navbar-inverse"> 
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a class="navbar-brand" href="index.html">Judo APP</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="risultati.html">Risultati</a></li>
+                        <li><a href="atleti.html">Atleti</a></li>
+                        <li><a href="tatami.html">Tatami</a></li>
+                        <li><a href="societa.html">Società</a></li>
+                    </ul>
+                    <div class="nav navbar-nav navbar-right">
+                        <div class="nav navbar-button navbar-right" style="margin-right: 150px;">
+                            <div class="btn-group btn-group-lg">
+                                <button type="button" class="btn btn-success btn-nav admin" onclick="location.href='amministrazione.html';">Amministrazione</button>
+                                <button type="button" class="btn btn-success btn-nav log" data-toggle="modal" data-target="#loginModal">Log In</button>
+                                <button type="button" class="btn btn-success btn-nav logOut" onclick="logOut()">Log Out</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!---- Modal LogIn ---->
+        <div id="loginModal" class="modal modal-vertical-centered" tabindex="-1" role="dialog"  aria-hidden="true" style="display: none;" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+				    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <center><h2>Log In</h2></center>
+                        <form onsubmit="logIn(AdminID.value)">
+                        <center>
+					        <input style="margin-bottom: 10px;" type="password" class="form-control" id="AdminID" placeholder="Inserisci Password" required>
+                            <button type="submit" class="btn btn-success">Accedi</button>
+                        </center>
+                        </form>
+				    </div>
+                </div>
+            </div>
+        </div>
+        <!---- Modal Modifica ---->
+        <div id="ModificaModal" class="modal modal-vertical-centered" tabindex="-1" role="dialog"  aria-hidden="true"  >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+				    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <center><h2>Modifica atleta</h2></center>
+                        <div id="idModificaAtleta">
+                            
+                        </div>
+				    </div>
+                </div>
+            </div>
+        </div>
+        <!---- Inserimento ---->
+        <div class="row">
+            <div class="col-md-offset-1 col-md-4">
+                <form onsubmit="Inserisci(TextBoxNome.value, TextBoxCognome.value,TextBoxPeso.value,sesso.value, TextBoxCategoriaAnnoNascita.value,TextBoxidSocietà.value)">
+                    <table class="table">
+                        <tr class="form-group">
+                            <td><strong>Nome:</strong></td>
+                            <td> <input id="TextBoxNome" type="text" name="Nome" pattern="[A-Za-z]+"  value="" required class="form-control" placeholder="Nome"></td>
+                        </tr>
+                        <tr class="form-group">
+                            <td><strong>Cognome:</strong></td>
+                            <td><input id="TextBoxCognome" type="text" name="Cognome" pattern="[A-Za-z ]+" value="" required class="form-control" placeholder="Cognome"></td>
+
+                        </tr>
+                        <tr class="form-group">
+                            <td><strong>Peso:</strong></td>
+                            <td><input id="TextBoxPeso" type="text" name="Peso" pattern="[0-9]{2}"  value="" required class="form-control" placeholder="Peso"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sesso:</strong></td>
+                            <td>
+                                <select id="sesso" class="form-control" required>
+                                  <option value="1">Maschio</option>
+                                  <option value="0">Femmina</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="form-group">
+                            <td><strong>Anno di nascita:</strong></td>
+                            <td><input id="TextBoxCategoriaAnnoNascita" type="text" name="AnnoNascita" pattern="[0-9]{4}" min="1910" max="2017" value="" required class="form-control" placeholder="Anno di nascita"></td>
+                        </tr>
+                        <tr class="form-group">
+                            <td><strong>Id società:</strong></td>
+                            <td><input id="TextBoxidSocietà" type="text" name="idSocietà" pattern="[0-9]+" value="" required class="form-control" placeholder="ID Società"></td>
+                        </tr>
+                    </table>
+                    <button type="submit" class="btn btn-success btn-small btn-nav">Inserisci</button>
+                </form>
+            </div>
+            <!---- Visualizzazione Atleti Inseriti ---->
+            <div class="col-md-offset-1 col-md-5">
+                <div class="thumbnail">
+                    <div class="table-responsive" style="width: 100%; height: 300px; overflow: auto;">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Cognome</th>
+                                    <th>Peso</th>
+                                    <th>Categoria</th>
+                                    <th>Sesso</th>
+                                    <th>Società</th>
+                                </tr>
+                            </thead>
+                            <tbody id="TabellaAtleti">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
